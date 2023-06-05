@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+
+<!-- 
+
+# ===================================== COPYRIGHT ===================================== #
+#                                                                                       #
+#  IFRA (Intelligent Flexible Robotics and Assembly) Group, CRANFIELD UNIVERSITY        #
+#  Created on behalf of the IFRA Group at Cranfield University, United Kingdom          #
+#  E-mail: IFRA@cranfield.ac.uk                                                         #
+#                                                                                       #
+#  Licensed under the Apache-2.0 License.                                               #
+#  You may not use this file except in compliance with the License.                     #
+#  You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0  #
+#                                                                                       #
+#  Unless required by applicable law or agreed to in writing, software distributed      #
+#  under the License is distributed on an "as-is" basis, without warranties or          #
+#  conditions of any kind, either express or implied. See the License for the specific  #
+#  language governing permissions and limitations under the License.                    #
+#                                                                                       #
+#  IFRA Group - Cranfield University                                                    #
+#  AUTHORS: Mikel Bueno Viso - Mikel.Bueno-Viso@cranfield.ac.uk                         #
+#           Dr. Seemal Asif  - s.asif@cranfield.ac.uk                                   #
+#           Prof. Phil Webb  - p.f.webb@cranfield.ac.uk                                 #
+#                                                                                       #
+#  Date: June, 2023.                                                                    #
+#                                                                                       #
+# ===================================== COPYRIGHT ===================================== #
+
+# ===================================== COPYRIGHT ===================================== #
+#                                                                                       #
+#                                                                                       #
+# ===================================== COPYRIGHT ===================================== #
+
+# ======= CITE OUR WORK ======= #
+# You can cite our work with the following statement:
+# IFRA-Cranfield (2023) Conveyor Belt for ROS2-Gazebo Simulation. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+
+-->
+
+<robot name="conveyorbelt" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <link name="world" />
+
+	<link name="belt_visual">
+		<inertial>
+			<origin xyz="1.1327E-16 -3.3286E-17 0.66019" rpy="0 0 0" />
+			<mass value="71.953" />
+			<inertia ixx="7.5972" ixy="-1.394E-14" ixz="1.9328E-17" iyy="0.99673" iyz="-9.2056E-18" izz="8.1168" />
+		</inertial>
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+                <mesh filename="file://$(find conveyorbelt_gazebo)/meshes/conveyor_belt.dae" scale="1 1 1" />
+			</geometry>
+			<!--
+			<material name="white">
+				<color rgba="1 1 1 1" />
+			</material>
+			-->
+		</visual>
+		<collision>
+			<origin xyz="0.0 0.0 0" rpy="0.0 0.0 0.0"/>
+			<geometry>
+				<mesh filename="file://$(find conveyorbelt_gazebo)/meshes/conveyor_belt.dae" scale="1 1 1" />
+			</geometry>
+		</collision>
+	</link>
+
+	<link name="belt_moving">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+			<mass value="100"/>
+			<inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+		</inertial>
+		<!-- 
+		<visual>
+			<origin xyz="0.0 0.0 0.0005" rpy="0.0 0.0 0.0"/>
+			<geometry>
+				<box size="0.425 1.2 0.001"/>
+			</geometry>
+			<material name="test">
+				<color rgba="1 0 1 1" />
+			</material>
+		</visual> 
+		-->
+		<collision>
+			<origin xyz="0.0 0.0 0.0005" rpy="0.0 0.0 0.0"/>
+			<geometry>
+				<box size="0.425 1.2 0.001"/>
+			</geometry>
+		</collision>
+	</link>
+    
+    <joint name="belt_fixed" type="fixed">
+		<parent link="world"/>
+		<child link="belt_visual"/>
+		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0"/>
+	</joint>
+
+	<joint name="belt_joint" type="prismatic">
+		<origin xyz="0.0 0.0 0.74" rpy="0.0 0.0 0.0"/>
+		<parent link="belt_visual"/>
+		<child link="belt_moving"/>
+		<axis xyz="0 1 0"/>
+		<limit lower="0.0" upper="1" effort="1000" velocity="1000"/>
+		<dynamics damping="1.0" friction="1000.0"/>
+	</joint>
+
+
+
+</robot>
