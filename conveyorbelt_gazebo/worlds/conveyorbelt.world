@@ -60,7 +60,7 @@
     <!-- GAZEBO PLUGINS: -->
 
     <!--
-    <plugin name="conveyor_belt_plugin" filename="libROSConveyorBeltPlugin.so">
+    <plugin name="ros2_conveyorbelt_plugin" filename="libROS2ConveyorBeltPlugin.so">
       <robot_namespace>/ConveyorBelt</robot_namespace>
       <link>belt_moving</link>
       <power>0.0</power>
