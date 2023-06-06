@@ -57,16 +57,12 @@
       <shadows>0</shadows>
     </scene>
 
-    <!-- GAZEBO PLUGINS: -->
-
-    <!--
-    <plugin name="ros2_conveyorbelt_plugin" filename="libROS2ConveyorBeltPlugin.so">
-      <robot_namespace>/ConveyorBelt</robot_namespace>
-      <link>belt_moving</link>
-      <power>0.0</power>
-			<max_velocity>1.0</max_velocity>
-    </plugin>
-    -->
+    <!-- Insert Conveyor Belt -->
+    <include>
+      <name>conveyor_belt</name>
+      <pose>0 0 0 0 0 0</pose>
+      <uri>model://conveyor_belt</uri>
+    </include>
 
   </world>
 </sdf>

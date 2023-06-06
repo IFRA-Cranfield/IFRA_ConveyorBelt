@@ -45,7 +45,7 @@ find_package(conveyorbelt_msgs REQUIRED)
 # /include:
 include_directories(include)
 
-# GAZEBO LINK ATTACHER:
+# ROS2 Conveyor Belt Plugin:
 
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})

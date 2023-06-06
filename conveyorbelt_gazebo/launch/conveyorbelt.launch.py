@@ -83,43 +83,8 @@ def generate_launch_description():
                     get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
                 launch_arguments={'world': conveyorbelt_gazebo}.items(),
              )
-
-    # ***** ROBOT DESCRIPTION ***** #
-    # ConveyorBelt Description file package:
-    conveyorbelt_description_path = os.path.join(
-        get_package_share_directory('conveyorbelt_gazebo'))
-    # ConveyorBelt ROBOT urdf file path:
-    xacro_file = os.path.join(conveyorbelt_description_path,
-                              'urdf',
-                              'conveyorbelt.urdf.xacro')
-    # Generate ROBOT_DESCRIPTION for ConveyorBelt:
-    doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc, mappings={})
-    robot_description_config = doc.toxml()
-    robot_description = {'robot_description': robot_description_config}
-
-    # ROBOT STATE PUBLISHER NODE:
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='both',
-        parameters=[
-            robot_description,
-            {"use_sim_time": True}
-        ]
-    )
-
-    # SPAWN ROBOT TO GAZEBO:
-    spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
-                        arguments=['-topic', 'robot_description',
-                                   '-entity', 'conveyorbelt'],
-                        output='both')
     
     # ***** RETURN LAUNCH DESCRIPTION ***** #
     return LaunchDescription([
-        
         gazebo, 
-        node_robot_state_publisher,
-        spawn_entity,
-
     ])
