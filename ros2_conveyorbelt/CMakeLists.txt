@@ -69,4 +69,17 @@ install(
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
+# =========================================================== #
+# REQUIRED TO EXECUTE .py scripts:
+install(
+  DIRECTORY 
+    python
+  DESTINATION 
+    share/${PROJECT_NAME}
+)
+install(PROGRAMS
+  python/SpawnObject.py
+  DESTINATION lib/${PROJECT_NAME} 
+)
+
 ament_package()

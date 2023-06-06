@@ -35,10 +35,10 @@
 #include <gazebo_ros/node.hpp>
 #include <rclcpp/rclcpp.hpp>
 
-#include "ros2_conveyorbelt/ros2_conveyorbelt_plugin.hpp"
+#include "ros2_conveyorbelt/ros2_conveyorbelt_plugin.hpp"     // Header file.
 
-#include <conveyorbelt_msgs/srv/conveyor_belt_control.hpp>
-#include <conveyorbelt_msgs/msg/conveyor_belt_state.hpp>
+#include <conveyorbelt_msgs/srv/conveyor_belt_control.hpp>    // ROS2 Service.
+#include <conveyorbelt_msgs/msg/conveyor_belt_state.hpp>      // ROS2 Message.
 
 #include <memory>
 
@@ -49,41 +49,34 @@ class ROS2ConveyorBeltPluginPrivate
 {
 public:
 
-  // Connection to world update event. Callback is called while this is alive:
-  gazebo::event::ConnectionPtr update_connection_;
-
-  // Node for ROS communication:
+  // ROS node for communication, managed by gazebo_ros.
   gazebo_ros::Node::SharedPtr ros_node_;
 
   // The joint that controls the movement of the belt:
   gazebo::physics::JointPtr belt_joint_;
 
+  // Additional parametres:
   double belt_velocity_;
   double max_velocity_;
   double power_;
-
-  // Position limit of belt joint to reset: 
   double limit_;
+  
+  // PUBLISH ConveyorBelt status:
+  void PublishStatus();                                                                     // Method to publish status.
+  rclcpp::Publisher<conveyorbelt_msgs::msg::ConveyorBeltState>::SharedPtr status_pub_;      // Publisher.
+  conveyorbelt_msgs::msg::ConveyorBeltState status_msg_;                                    // ConveyorBelt status.
 
-  /// Status Publisher:
-  rclcpp::Publisher<conveyorbelt_msgs::msg::ConveyorBeltState>::SharedPtr status_pub_;
-  conveyorbelt_msgs::msg::ConveyorBeltState status_msg_;
+  // SET Conveyor Power:
+  void SetConveyorPower(
+    conveyorbelt_msgs::srv::ConveyorBeltControl::Request::SharedPtr,    
+    conveyorbelt_msgs::srv::ConveyorBeltControl::Response::SharedPtr);                      // Method to execute service.
+  rclcpp::Service<conveyorbelt_msgs::srv::ConveyorBeltControl>::SharedPtr enable_service_;  // ROS2 Service.
 
+  // WORLD UPDATE event:
+  void OnUpdate();
   rclcpp::Time last_publish_time_;
   int update_ns_;
-
-  void OnUpdate();
-
-  // Service to handle the ConveyotBelt:
-  rclcpp::Service<conveyorbelt_msgs::srv::ConveyorBeltControl>::SharedPtr enable_service_;
-
-  // Callback for enable service:
-  void SetConveyorPower(
-    conveyorbelt_msgs::srv::ConveyorBeltControl::Request::SharedPtr,
-    conveyorbelt_msgs::srv::ConveyorBeltControl::Response::SharedPtr);
-
-  // Method to publish status:
-  void PublishStatus();
+  gazebo::event::ConnectionPtr update_connection_;  // Connection to world update event. Callback is called while this is alive.
 
 };
 
@@ -96,14 +89,13 @@ ROS2ConveyorBeltPlugin::~ROS2ConveyorBeltPlugin()
 {
 }
 
-void ROS2ConveyorBeltPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
+void ROS2ConveyorBeltPlugin::Load(gazebo::physics::WorldPtr _world, sdf::ElementPtr _sdf)
 {
   
   auto logger = rclcpp::get_logger("logger_test");
-  RCLCPP_ERROR(logger, "TEEEEEEEEEEEEEEEEEEEEEEST");
   
-  // Create ROS node
-  impl_->ros_node_ = gazebo_ros::Node::Get(sdf);
+  // Create ROS2 node:
+  impl_->ros_node_ = gazebo_ros::Node::Get(_sdf);
 
   // Create status publisher
   impl_->status_pub_ = impl_->ros_node_->create_publisher<conveyorbelt_msgs::msg::ConveyorBeltState>("CONVEYORSTATE", 10);
@@ -111,10 +103,10 @@ void ROS2ConveyorBeltPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementP
   impl_->status_msg_.power = 0;
 
   // GET MODEL --> "conveyorbelt":
-  //gazebo::physics::ModelPtr model = world->ModelByName("conveyorbelt");
-  //if (!model) {
-  //  RCLCPP_ERROR(impl_->ros_node_->get_logger(), "Belt model not found, unable to start conveyor plugin.");
-  //}
+  gazebo::physics::ModelPtr model = _world->ModelByName("conveyor_belt");
+  if (!model) {
+    RCLCPP_ERROR(impl_->ros_node_->get_logger(), "Belt model not found, unable to start conveyor plugin.");
+  }
   
   // Create belt joint
   impl_->belt_joint_ = model->GetJoint("belt_joint");
@@ -125,7 +117,7 @@ void ROS2ConveyorBeltPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementP
   }
 
   // Set velocity (m/s)
-  impl_->max_velocity_ = sdf->GetElement("max_velocity")->Get<double>();
+  impl_->max_velocity_ = _sdf->GetElement("max_velocity")->Get<double>();
 
   // Set limit (m)
   impl_->limit_ = impl_->belt_joint_->UpperLimit();
@@ -137,7 +129,7 @@ void ROS2ConveyorBeltPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementP
       &ROS2ConveyorBeltPluginPrivate::SetConveyorPower, impl_.get(),
       std::placeholders::_1, std::placeholders::_2));
 
-  double publish_rate = sdf->GetElement("publish_rate")->Get<double>();
+  double publish_rate = _sdf->GetElement("publish_rate")->Get<double>();
   impl_->update_ns_ = int((1/publish_rate) * 1e9);
 
   impl_->last_publish_time_ = impl_->ros_node_->get_clock()->now();
@@ -193,5 +185,5 @@ void ROS2ConveyorBeltPluginPrivate::PublishStatus(){
   status_pub_->publish(status_msg_);
 }
 
-GZ_REGISTER_MODEL_PLUGIN(ROS2ConveyorBeltPlugin)
+GZ_REGISTER_WORLD_PLUGIN(ROS2ConveyorBeltPlugin)
 }  // namespace gazebo_ros

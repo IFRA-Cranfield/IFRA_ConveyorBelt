@@ -40,7 +40,7 @@ namespace gazebo_ros
 
 class ROS2ConveyorBeltPluginPrivate;
 
-class ROS2ConveyorBeltPlugin : public gazebo::ModelPlugin
+class ROS2ConveyorBeltPlugin : public gazebo::WorldPlugin
 {
 public:
   /// Constructor:
@@ -50,12 +50,13 @@ public:
   virtual ~ROS2ConveyorBeltPlugin();
 
   // LOAD plugin:
-  void Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf) override;
+  void Load(gazebo::physics::WorldPtr _world, sdf::ElementPtr _sdf) override;
 
 private:
 
   std::unique_ptr<ROS2ConveyorBeltPluginPrivate> impl_;
 };
+
 }  // namespace gazebo_ros
 
 #endif  // ROS2_CONVEYORBELT_PLUGIN_HPP_
