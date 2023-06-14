@@ -89,27 +89,14 @@ ROS2ConveyorBeltPlugin::~ROS2ConveyorBeltPlugin()
 {
 }
 
-void ROS2ConveyorBeltPlugin::Load(gazebo::physics::WorldPtr _world, sdf::ElementPtr _sdf)
+void ROS2ConveyorBeltPlugin::Load(gazebo::physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
-  
-  auto logger = rclcpp::get_logger("logger_test");
   
   // Create ROS2 node:
   impl_->ros_node_ = gazebo_ros::Node::Get(_sdf);
 
-  // Create status publisher
-  impl_->status_pub_ = impl_->ros_node_->create_publisher<conveyorbelt_msgs::msg::ConveyorBeltState>("CONVEYORSTATE", 10);
-  impl_->status_msg_.enabled = false;
-  impl_->status_msg_.power = 0;
-
-  // GET MODEL --> "conveyorbelt":
-  gazebo::physics::ModelPtr model = _world->ModelByName("conveyor_belt");
-  if (!model) {
-    RCLCPP_ERROR(impl_->ros_node_->get_logger(), "Belt model not found, unable to start conveyor plugin.");
-  }
-  
-  // Create belt joint
-  impl_->belt_joint_ = model->GetJoint("belt_joint");
+  // OBTAIN -> BELT JOINT:
+  impl_->belt_joint_ = _model->GetJoint("belt_joint");
 
   if (!impl_->belt_joint_) {
     RCLCPP_ERROR(impl_->ros_node_->get_logger(), "Belt joint not found, unable to start conveyor plugin.");
@@ -121,6 +108,11 @@ void ROS2ConveyorBeltPlugin::Load(gazebo::physics::WorldPtr _world, sdf::Element
 
   // Set limit (m)
   impl_->limit_ = impl_->belt_joint_->UpperLimit();
+
+  // Create status publisher
+  impl_->status_pub_ = impl_->ros_node_->create_publisher<conveyorbelt_msgs::msg::ConveyorBeltState>("CONVEYORSTATE", 10);
+  impl_->status_msg_.enabled = false;
+  impl_->status_msg_.power = 0;
 
   // REGISTER ConveyorBelt SERVICE:
   impl_->enable_service_ =
@@ -137,6 +129,8 @@ void ROS2ConveyorBeltPlugin::Load(gazebo::physics::WorldPtr _world, sdf::Element
   // Create a connection so the OnUpdate function is called at every simulation iteration. 
   impl_->update_connection_ = gazebo::event::Events::ConnectWorldUpdateBegin(
     std::bind(&ROS2ConveyorBeltPluginPrivate::OnUpdate, impl_.get()));
+
+  RCLCPP_INFO(impl_->ros_node_->get_logger(), "GAZEBO ConveyorBelt plugin loaded successfully.");
 }
 
 void ROS2ConveyorBeltPluginPrivate::OnUpdate()
@@ -185,5 +179,5 @@ void ROS2ConveyorBeltPluginPrivate::PublishStatus(){
   status_pub_->publish(status_msg_);
 }
 
-GZ_REGISTER_WORLD_PLUGIN(ROS2ConveyorBeltPlugin)
+GZ_REGISTER_MODEL_PLUGIN(ROS2ConveyorBeltPlugin)
 }  // namespace gazebo_ros

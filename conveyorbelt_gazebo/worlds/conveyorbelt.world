@@ -64,14 +64,6 @@
       <uri>model://conveyor_belt</uri>
     </include>
 
-    <plugin name="ros2_conveyorbelt_plugin" filename="libros2_conveyorbelt_plugin.so" >
-      <ros>
-        <namespace></namespace>
-      </ros>
-      <max_velocity>1.0</max_velocity>
-      <publish_rate>1000</publish_rate>
-    </plugin>
-
   </world>
 
 </sdf>
