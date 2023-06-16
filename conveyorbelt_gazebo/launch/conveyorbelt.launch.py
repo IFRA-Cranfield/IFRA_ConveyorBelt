@@ -24,14 +24,9 @@
 #                                                                                       #
 # ===================================== COPYRIGHT ===================================== #
 
-# ===================================== COPYRIGHT ===================================== #
-#                                                                                       #
-#                                                                                       #
-# ===================================== COPYRIGHT ===================================== #
-
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Conveyor Belt for ROS2-Gazebo Simulation. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo-ROS2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
 # conveyorbelt.launch.py:
 # Launch file for the IFRA_ConveyorBelt GAZEBO SIMULATION in ROS2:

@@ -1,4 +1,5 @@
 /*
+
 # ===================================== COPYRIGHT ===================================== #
 #                                                                                       #
 #  IFRA (Intelligent Flexible Robotics and Assembly) Group, CRANFIELD UNIVERSITY        #
@@ -25,8 +26,25 @@
 
 # ===================================== COPYRIGHT ===================================== #
 #                                                                                       #
+#  Information and guidance on how to implement a ROS2-Gazebo ConveyorBelt plugin has   #
+#  been taken from the usnistgov/ARIAC repo in GitHub. In this repository, the          #
+#  simulation of a ConveyorBelt is already being simulated, and the source code can     #
+#  be found inside /ariac_plugins. This has been useful for the development of the      #
+#  IFRA_ConveyorBelt plugin, which has been desinged in order to comply with the IFRA   # 
+#  ROS2-Gazebo Robot Simulation.                                                        #
+#                                                                                       #
+#  usnistgov/ARIAC repo in GitHub:                                                      #
+#     Repository for ARIAC (Agile Robotics for Industrial Automation Competition),      #
+#     consisting of kit building and assembly in a simulated warehouse.                 #                                             
+#                                                                                       #
+#  Copyright (C) 2023, usnistgov/ARIAC                                                  #                                    
 #                                                                                       #
 # ===================================== COPYRIGHT ===================================== #
+
+# ======= CITE OUR WORK ======= #
+# You can cite our work with the following statement:
+# IFRA-Cranfield (2023) Gazebo-ROS2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+
 */
 
 #ifndef ROS2_CONVEYORBELT_PLUGIN_HPP_
