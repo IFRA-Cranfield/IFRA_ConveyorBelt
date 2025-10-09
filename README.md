@@ -26,7 +26,7 @@
 
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Gazebo-ROS2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo-ROS 2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
 -->
 
@@ -36,7 +36,7 @@
 
 <div align="center">
 
-  <h2 align="center">IFRA_ConveyorBelt - Gazebo-ROS2 Plugin</h2>
+  <h2 align="center">IFRA_ConveyorBelt - Gazebo-ROS 2 Plugin</h2>
 
   <p align="center">
     IFRA (Intelligent Flexible Robotics and Assembly) Group
@@ -75,9 +75,9 @@ Centre for Robotics and Assembly:
 
 ### IFRA_ConveyorBelt Repository
 
-The IFRA_ConveyorBelt repository has been developed in order to simulate the behaviour of a Conveyor Belt in a ROS2-Gazebo environment. This feature has been achieved thanks to the design and implementation of a ROS2-Gazebo Plugin, which activates the Conveyor with a simple Service Call in ROS2. The repository contains a Gazebo package as well, where the plugin can be easily tested and verified with a simple box. 
+The IFRA_ConveyorBelt repository has been developed in order to simulate the behaviour of a Conveyor Belt in a ROS 2-Gazebo environment. This feature has been achieved thanks to the design and implementation of a ROS 2-Gazebo Plugin, which activates the Conveyor with a simple Service Call in ROS 2. The repository contains a Gazebo package as well, where the plugin can be easily tested and verified with a simple box. 
 
-__VIDEO: Simple ConveyorBelt in ROS2 Gazebo__
+__VIDEO: Simple ConveyorBelt in ROS 2 Gazebo__
 
 [![Alt text](https://img.youtube.com/vi/8Ciuf99ukMs/0.jpg)](https://www.youtube.com/watch?v=8Ciuf99ukMs)
 
@@ -85,11 +85,11 @@ __VIDEO: Simple ConveyorBelt in ROS2 Gazebo__
 
 ## INSTALLATION
 
-All packages in this repository have been developed, executed and tested in a Ubuntu 22.04 machine with ROS 2 Humble (the plugin has not been tested in other ROS2 distributions yet). It can be easily downloaded and installed by executing the following commands:
+The IFRA_ConveyorBelt tool (ROS 2 Humble, Gz Fortress) can be easily downloaded and installed by executing the following commands:
 
 ```sh
 cd ~/dev_ws/src
-git clone https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.git
+git clone -b humble-gzfortress https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.git
 cd ~/dev_ws
 colcon build
 ```
@@ -98,46 +98,50 @@ colcon build
 
 ## USAGE
 
-The "ros2_conveyorbelt" Gazebo plugin is a MODEL PLUGIN. Thus, it has to be defined inside the ConveyorBelt model (.urdf or .sdf) and it is loaded when the ConveyorBelt is spawned to the Gazebo World. The plugin generates a ROS2 Service named /CONVEYORPOWER, which must be called in order to manipulate the speed of the ConveyorBelt. 
+The "ros2_conveyorbelt" Gazebo plugin has to be defined inside the ConveyorBelt model (.sdf) and it is loaded when the ConveyorBelt is spawned to the Gazebo World. The plugin generates a ROS 2 Service named /CONVEYORPOWER, which must be called in order to manipulate the speed of the ConveyorBelt. 
 
 __MAIN REQUIREMENT to execute the plugin: <plugin> tag in MODEL__
 
-The following tag must be added to the .sdf or .urdf file of the ConveyorBelt model:
+The following tag must be added to the .sdf file of the ConveyorBelt model:
 
 ```sh
-<gazebo>
-    <plugin filename="libROS2ConveyorBeltPlugin.so" name="ros2_conveyorbelt_plugin">
-        <ros>
-            <namespace></namespace>
-        </ros>
-        <max_velocity>0.2</max_velocity>
-        <publish_rate>10</publish_rate>
-    </plugin>
-</gazebo>
+<plugin name="ros2_conveyorbelt_system" filename="libros2gz_conveyorbelt_system.so">
+  <max_velocity> </max_velocity>
+  <publish_rate> </publish_rate>
+  <joint_name> </joint_name>
+  <lower_limit> </lower_limit>
+  <upper_limit> </upper_limit>
+</plugin>
 ```
 
-The max_velocity and publish_rate parameters can be manually modified, but it is recommended to leave them with these pre-defined values for optimal performance.
+The max_velocity, publish_rate, joint_name and upper/lower limit parameters can be manually modified, but it is recommended to leave them with the pre-defined values in conveyorbelt_gz/sdf/conveyor.sdf for optimal performance.
 
 __EXAMPLE: Simple cube in ConveyorBelt__
 
-The following steps must be followed in order to execute and simulate a simple box on top of the ConveyorBelt (as shown in the [video](https://www.youtube.com/watch?v=8Ciuf99ukMs) above):
+The following steps must be followed in order to execute and simulate a simple box on top of the ConveyorBelt:
 
-1. Launch the ConveyorBelt Gazebo environment:
+1. Launch the ConveyorBelt Gazebo world environment:
 
     ```sh
-    ros2 launch conveyorbelt_gazebo conveyorbelt.launch.py
+    ros2 launch conveyorbelt_gz conveyorbelt.launch.py
     ```
 
-2. Spawn the box on top of the Belt:
+2. Spawn the Conveyor Belt:
 
     ```sh
-    ros2 run ros2_conveyorbelt SpawnObject.py --package "conveyorbelt_gazebo" --urdf "box.urdf" --name "box" --x 0.0 --y -0.5 --z 0.76
+    ros2 run ros2srrc_execution SpawnObject.py --package "conveyorbelt_gz" --sdf "conveyor.sdf" --name "conveyor" --x 0.0 --y 0.0 --z 0.0
     ```
 
-3. Activate the ConveyorBelt with the desired speed -> Value = (0,100]:
+3. Spawn the box on top of the Belt:
 
     ```sh
-    ros2 service call /CONVEYORPOWER conveyorbelt_msgs/srv/ConveyorBeltControl "{power: --}"
+    ros2 run ros2srrc_execution SpawnObject.py --package "conveyorbelt_gz" --sdf "RedCube.sdf" --name "RedCube" --x 0.0 --y -0.5 --z 0.9
+    ```
+
+4. Activate the ConveyorBelt with the desired speed -> Value = (0,100]:
+
+    ```sh
+    ros2 service call /CONVEYORPOWER conveyorbelt_msgs/srv/ConveyorBeltControl "{power: 10}"
     ```
 
 

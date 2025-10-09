@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>conveyorbelt_gazebo</name>
+  <name>conveyorbelt_gz</name>
   <version>0.0.0</version>
-  <description>IFRA-Cranfield (Cranfield University, UK). Package: IFRA_ConveyorBelt - ConveyorBelt-Gazebo</description>
+  <description>IFRA-Cranfield (Cranfield University, UK). Package: IFRA_ConveyorBelt - ConveyorBelt-Gz</description>
 
   <author>Mikel Bueno Viso</author>
   <maintainer email="Mikel.Bueno-Viso@cranfield.ac.uk">Mikel Bueno Viso</maintainer>
@@ -15,8 +15,10 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <build_depend>ros2_conveyorbelt</build_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
-    <gazebo_ros gazebo_model_path="${prefix}/models"/>
   </export>
+
 </package>

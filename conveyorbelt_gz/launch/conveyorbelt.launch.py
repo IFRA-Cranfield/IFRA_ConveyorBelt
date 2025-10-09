@@ -1,6 +1,4 @@
-<?xml version="1.0" ?>
-
-<!--
+#!/usr/bin/python3
 
 # ===================================== COPYRIGHT ===================================== #
 #                                                                                       #
@@ -28,37 +26,51 @@
 
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Gazebo-ROS2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo-ROS 2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
--->
+# objectpose.launch.py:
+# Launch file for the IFRA_ConveyorBelt GAZEBO SIMULATION in ROS 2:
 
-<sdf version="1.4">
+# Import libraries:
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.event_handlers import OnProcessExit
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+    
+# ========== **GENERATE LAUNCH DESCRIPTION** ========== #
+def generate_launch_description():
+    
+    # ***** GAZEBO ***** #   
+    # DECLARE GAZEBO WORLD file:
+    world_gz = os.path.join(
+        get_package_share_directory('ros2srrc_gz'),
+        'worlds',
+        'ros2srrc_gz.sdf')
+    # DECLARE Gazebo LAUNCH file:
+    gzSIM = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')]
+        ),
+        launch_arguments={
+            'gz_args': f'-r -v 1 "{world_gz}"',
+            'on_exit_shutdown': 'true'
+        }.items(),
+    )
 
-  <world name="default">
-
-    <!-- WORLD COMPONENTS: STANDARD -->
-
-    <gravity>0 0 -9.8</gravity>
-
-    <include>
-      <uri>model://ground_plane</uri>
-    </include>
-
-    <include>
-      <uri>model://sun</uri>
-    </include>
-
-    <scene>
-      <shadows>0</shadows>
-    </scene>
-
-    <!-- Insert Conveyor Belt -->
-    <include>
-      <name>conveyor_belt</name>
-      <pose>0 0 0 0 0 0</pose>
-      <uri>model://conveyor_belt</uri>
-    </include>
-
-  </world>
-
-</sdf>
+    # SpawnEntity service bridge for world "ros2srrc_GzWorld":
+    gzSERVICE_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='gz_spawn_service_bridge',
+        arguments=['/world/ros2srrc_GzWorld/create@ros_gz_interfaces/srv/SpawnEntity'],
+        output='screen'
+    )
+    
+    # ***** RETURN LAUNCH DESCRIPTION ***** #
+    return LaunchDescription([
+        gzSIM, 
+        gzSERVICE_bridge
+    ])

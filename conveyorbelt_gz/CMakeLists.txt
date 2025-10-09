@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(conveyorbelt_gazebo)
+project(conveyorbelt_gz)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -35,9 +35,8 @@ endif()
 install(
   DIRECTORY 
     launch
-    models
-    worlds
-    urdf
+    sdf
+    meshes
   DESTINATION 
     share/${PROJECT_NAME}
 )
