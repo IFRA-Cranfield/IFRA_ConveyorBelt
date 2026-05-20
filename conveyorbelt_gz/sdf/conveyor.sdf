@@ -28,16 +28,17 @@
 
 # ===================================== COPYRIGHT ===================================== #
 #                                                                                       #
-#  The CAD file of the ConveyorBelt has been taken from the rokokoo/conveyor_demo ROS 2 #
-#  package. The .urdf file has been converted to a Gazebo model (.srdf).                #                                                                  
+#  The CAD file of the conveyor belt has been taken from the rokokoo/conveyor_demo      #
+#  ROS 2 package. The .urdf file has been converted to a Gazebo Fortress / GZ Sim       #
+#  model (.sdf).                                                                        #
 #                                                                                       #
-#  Copyright (C) 2021, GitHub/rokokoo                                                   #                                    
+#  Copyright (C) 2021, GitHub/rokokoo                                                   #
 #                                                                                       #
 # ===================================== COPYRIGHT ===================================== #
 
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Gazebo-ROS 2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo Fortress / GZ Sim Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
 -->
 
@@ -133,8 +134,8 @@
         <limit>
           <lower>0.0</lower>
           <upper>0.01</upper>
-          <effort>1e8</effort>      
-          <velocity>10.0</velocity> 
+          <effort>1e8</effort>
+          <velocity>10.0</velocity>
         </limit>
         <dynamics>
           <damping>1.0</damping>
@@ -155,5 +156,5 @@
     </plugin>
 
   </model>
-  
+
 </sdf>

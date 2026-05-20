@@ -4,7 +4,7 @@
 #                                                                                       #
 #  IFRA (Intelligent Flexible Robotics and Assembly) Group, CRANFIELD UNIVERSITY        #
 #  Created on behalf of the IFRA Group at Cranfield University, United Kingdom          #
-#  E-mail: IFRA@cranfield.ac.uk                                                       #
+#  E-mail: IFRA@cranfield.ac.uk                                                         #
 #                                                                                       #
 #  Licensed under the Apache-2.0 License.                                               #
 #  You may not use this file except in compliance with the License.                     #
@@ -26,7 +26,7 @@
 
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Gazebo-ROS 2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo Fortress / GZ Sim Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
 -->
 
@@ -36,7 +36,7 @@
 
 <div align="center">
 
-  <h2 align="center">IFRA_ConveyorBelt - Gazebo-ROS 2 Plugin</h2>
+  <h2 align="center">IFRA_ConveyorBelt - Gazebo Fortress / GZ Sim Plugin</h2>
 
   <p align="center">
     IFRA (Intelligent Flexible Robotics and Assembly) Group
@@ -70,14 +70,14 @@ Centre for Robotics and Assembly:
 - Facebook: https://www.facebook.com/cranfieldunirobotics/
 - YouTube: https://www.youtube.com/@CranfieldRobotics
 - LinkedIn: https://www.linkedin.com/company/cranfieldrobotics/
-- Website: https://www.cranfield.ac.uk/centres/centre-for-robotics-and-assembly 
+- Website: https://www.cranfield.ac.uk/centres/centre-for-robotics-and-assembly
 
 
 ### IFRA_ConveyorBelt Repository
 
-The IFRA_ConveyorBelt repository has been developed in order to simulate the behaviour of a Conveyor Belt in a ROS 2-Gazebo environment. This feature has been achieved thanks to the design and implementation of a ROS 2-Gazebo Plugin, which activates the Conveyor with a simple Service Call in ROS 2. The repository contains a Gazebo package as well, where the plugin can be easily tested and verified with a simple box. 
+The IFRA_ConveyorBelt repository has been developed in order to simulate the behaviour of a conveyor belt in a Gazebo Fortress / GZ Sim environment. This feature has been achieved thanks to the design and implementation of a Gazebo Fortress / GZ Sim plugin, which activates the conveyor with a simple service call in ROS 2. The repository contains a Gazebo package as well, where the plugin can be easily tested and verified with a simple box.
 
-__VIDEO: Simple ConveyorBelt in ROS 2 Gazebo__
+__VIDEO: Simple Conveyor Belt in Gazebo Fortress / GZ Sim__
 
 [![Alt text](https://img.youtube.com/vi/8Ciuf99ukMs/0.jpg)](https://www.youtube.com/watch?v=8Ciuf99ukMs)
 
@@ -85,7 +85,7 @@ __VIDEO: Simple ConveyorBelt in ROS 2 Gazebo__
 
 ## INSTALLATION
 
-The IFRA_ConveyorBelt tool (ROS 2 Humble, Gz Fortress) can be easily downloaded and installed by executing the following commands:
+The IFRA_ConveyorBelt tool (ROS 2 Humble, Gazebo Fortress / GZ Sim) can be easily downloaded and installed by executing the following commands:
 
 ```sh
 cd ~/dev_ws/src
@@ -98,11 +98,11 @@ colcon build
 
 ## USAGE
 
-The "ros2_conveyorbelt" Gazebo plugin has to be defined inside the ConveyorBelt model (.sdf) and it is loaded when the ConveyorBelt is spawned to the Gazebo World. The plugin generates a ROS 2 Service named /CONVEYORPOWER, which must be called in order to manipulate the speed of the ConveyorBelt. 
+The "ros2_conveyorbelt" Gazebo Fortress / GZ Sim plugin has to be defined inside the conveyor belt model (.sdf) and it is loaded when the conveyor belt is spawned to the GZ Sim world. The plugin generates a ROS 2 service named /CONVEYORPOWER, which must be called in order to manipulate the speed of the conveyor belt.
 
 __MAIN REQUIREMENT to execute the plugin: <plugin> tag in MODEL__
 
-The following tag must be added to the .sdf file of the ConveyorBelt model:
+The following tag must be added to the .sdf file of the conveyor belt model:
 
 ```sh
 <plugin name="ros2_conveyorbelt_system" filename="libros2gz_conveyorbelt_system.so">
@@ -116,17 +116,17 @@ The following tag must be added to the .sdf file of the ConveyorBelt model:
 
 The max_velocity, publish_rate, joint_name and upper/lower limit parameters can be manually modified, but it is recommended to leave them with the pre-defined values in conveyorbelt_gz/sdf/conveyor.sdf for optimal performance.
 
-__EXAMPLE: Simple cube in ConveyorBelt__
+__EXAMPLE: Simple cube in conveyor belt__
 
-The following steps must be followed in order to execute and simulate a simple box on top of the ConveyorBelt:
+The following steps must be followed in order to execute and simulate a simple box on top of the conveyor belt:
 
-1. Launch the ConveyorBelt Gazebo world environment:
+1. Launch the conveyor belt GZ Sim world environment:
 
     ```sh
     ros2 launch conveyorbelt_gz conveyorbelt.launch.py
     ```
 
-2. Spawn the Conveyor Belt:
+2. Spawn the conveyor belt:
 
     ```sh
     ros2 run ros2srrc_execution SpawnObject.py --package "conveyorbelt_gz" --sdf "conveyor.sdf" --name "conveyor" --x 0.0 --y 0.0 --z 0.0
@@ -138,7 +138,7 @@ The following steps must be followed in order to execute and simulate a simple b
     ros2 run ros2srrc_execution SpawnObject.py --package "conveyorbelt_gz" --sdf "RedCube.sdf" --name "RedCube" --x 0.0 --y -0.5 --z 0.9
     ```
 
-4. Activate the ConveyorBelt with the desired speed -> Value = (0,100]:
+4. Activate the conveyor belt with the desired speed -> Value = (0,100]:
 
     ```sh
     ros2 service call /CONVEYORPOWER conveyorbelt_msgs/srv/ConveyorBeltControl "{power: 10}"
@@ -154,7 +154,7 @@ The following steps must be followed in order to execute and simulate a simple b
   <br />
   Created on behalf of the IFRA Group at Cranfield University, United Kingdom
   <br />
-  E-mail: IFRA@cranfield.ac.uk 
+  E-mail: IFRA@cranfield.ac.uk
   <br />
   <br />
   Licensed under the Apache-2.0 License.
@@ -180,11 +180,11 @@ The following steps must be followed in order to execute and simulate a simple b
 
 Some of the core concepts and source code used to develop the IFRA_ConveyorBelt repository has been implemented thanks to the information and content that is publicly released in the following GitHub repositories:
 
-- [usnistgov/ARIAC](https://github.com/usnistgov/ARIAC): Reference of how a ConveyorBelt can be simulated with a ROS2 Plugin has been taken from the "ariac2023" branch of this repository, and adapted for the IFRA ROS2 Robot Simulation in Gazebo.
+- [usnistgov/ARIAC](https://github.com/usnistgov/ARIAC): Reference of how a conveyor belt can be simulated with a ROS 2 plugin has been taken from the "ariac2023" branch of this repository, and adapted for the IFRA ROS 2 robot simulation in Gazebo Fortress / GZ Sim.
 
-- [rokokoo/gconveyor-demo](https://github.com/rokokoo/conveyor_demo): The CAD file (mesh) of the ConveyorBelt used in our demo has been taken from this repository.
+- [rokokoo/gconveyor-demo](https://github.com/rokokoo/conveyor_demo): The CAD file (mesh) of the conveyor belt used in our demo has been taken from this repository.
 
-Copyright statements aknowledging both repositories have been added to the source code.
+Copyright statements acknowledging both repositories have been added to the source code.
 
 <br />
 
@@ -193,7 +193,7 @@ Copyright statements aknowledging both repositories have been added to the sourc
 <p>
   You can cite our work with the following statement:
   <br />
-  IFRA-Cranfield (2023) Gazebo-ROS2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+  IFRA-Cranfield (2023) Gazebo Fortress / GZ Sim Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 </p>
 
 <br />
@@ -225,6 +225,6 @@ Copyright statements aknowledging both repositories have been added to the sourc
   <br />
   LinkedIn: https://www.linkedin.com/in/phil-webb-64283223/
   <br />
-  Profile: https://www.cranfield.ac.uk/people/professor-phil-webb-746415 
+  Profile: https://www.cranfield.ac.uk/people/professor-phil-webb-746415
   <br />
 </p>

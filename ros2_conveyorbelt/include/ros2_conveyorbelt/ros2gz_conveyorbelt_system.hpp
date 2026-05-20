@@ -26,24 +26,24 @@
 
 # ===================================== COPYRIGHT ===================================== #
 #                                                                                       #
-#  Information and guidance on how to implement a ROS 2-Gazebo ConveyorBelt plugin has  #
-#  been taken from the usnistgov/ARIAC repo in GitHub. In this repository, the          #
-#  simulation of a ConveyorBelt is already being simulated, and the source code can     #
-#  be found inside /ariac_plugins. This has been useful for the development of the      #
-#  IFRA_ConveyorBelt plugin, which has been desinged in order to comply with the IFRA   # 
-#  ROS 2-Gazebo Robot Simulation.                                                       #
+#  Information and guidance on how to implement a Gazebo Fortress / GZ Sim              #
+#  conveyor belt plugin has been taken from the usnistgov/ARIAC GitHub repo. In that    #
+#  repository, the simulation of a conveyor belt is already implemented, and the source #
+#  code can be found inside /ariac_plugins. This has been useful for the development    #
+#  IFRA_ConveyorBelt plugin, which has been designed to comply with the IFRA            #
+#  Gazebo Fortress / GZ Sim robot simulation.                                           #
 #                                                                                       #
 #  usnistgov/ARIAC repo in GitHub:                                                      #
 #     Repository for ARIAC (Agile Robotics for Industrial Automation Competition),      #
-#     consisting of kit building and assembly in a simulated warehouse.                 #                                             
+#     consisting of kit building and assembly in a simulated warehouse.                 #
 #                                                                                       #
-#  Copyright (C) 2023, usnistgov/ARIAC                                                  #                                    
+#  Copyright (C) 2023, usnistgov/ARIAC                                                  #
 #                                                                                       #
 # ===================================== COPYRIGHT ===================================== #
 
 # ======= CITE OUR WORK ======= #
 # You can cite our work with the following statement:
-# IFRA-Cranfield (2023) Gazebo-ROS 2 Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
+# IFRA-Cranfield (2023) Gazebo Fortress / GZ Sim Conveyor Belt Plugin. URL: https://github.com/IFRA-Cranfield/IFRA_ConveyorBelt.
 
 */
 

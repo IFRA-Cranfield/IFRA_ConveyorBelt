@@ -3,11 +3,11 @@
 <package format="3">
   <name>ros2_conveyorbelt</name>
   <version>0.0.0</version>
-  <description>IFRA-Cranfield (Cranfield University, UK). Package: ROS 2 ConveyorBelt for Gazebo Simulation</description>
+  <description>IFRA-Cranfield (Cranfield University, UK). Package: ROS 2 Conveyor Belt for Gazebo Fortress / GZ Sim</description>
 
   <author>Mikel Bueno Viso</author>
   <maintainer email="Mikel.Bueno-Viso@cranfield.ac.uk">Mikel Bueno Viso</maintainer>
-  
+
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

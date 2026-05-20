@@ -3,11 +3,11 @@
 <package format="3">
   <name>conveyorbelt_msgs</name>
   <version>0.0.0</version>
-  <description>IFRA-Cranfield (Cranfield University, UK). Package: Conveyor Belt for ROS 2/Gazebo Simulation (MSGS PACKAGE)</description>
+  <description>IFRA-Cranfield (Cranfield University, UK). Package: Conveyor Belt for ROS 2/Gazebo Fortress / GZ Sim (MSGS PACKAGE)</description>
 
   <author>Mikel Bueno Viso</author>
   <maintainer email="Mikel.Bueno-Viso@cranfield.ac.uk">Mikel Bueno Viso</maintainer>
-  
+
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
