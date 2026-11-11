@@ -30,7 +30,7 @@
 
 # ===================================== COPYRIGHT ===================================== #
 # SpawnObject.py script taken from:
-# IFRA-Cranfield (2023) ROS 2 Sim-to-Real Robot Control. URL: https://github.com/IFRA-Cranfield/ros2_SimRealRobotControl -> ros2srrc_execution ROS2 Package.
+# IFRA-Cranfield (2023) ROS 2 Sim-to-Real Robot Control. URL: https://github.com/IFRA-Cranfield/ros2srrc -> ros2srrc_execution ROS2 Package.
 
 # IMPORT LIBRARIES:
 import argparse
